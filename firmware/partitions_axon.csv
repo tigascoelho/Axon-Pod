@@ -1,0 +1,7 @@
+# Axon Tracker — 4MB flash: larger NVS (64KB), factory app + SPIFFS
+# After first flash with this table, run: pio run -t erase (once) if upload fails.
+# Name,   Type, SubType, Offset,   Size,     Flags
+nvs,      data, nvs,     0x9000,   0x10000,
+phy_init, data, phy,     0x19000,  0x1000,
+factory,  app,  factory, 0x20000,  0x1B0000,
+spiffs,   data, spiffs,  0x1D0000, 0x230000,
