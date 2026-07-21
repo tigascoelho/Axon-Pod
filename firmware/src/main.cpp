@@ -3,12 +3,15 @@
 #include "sensor.h"          // Substituído pelo novo SensorManager
 #include "power_manager.h"
 #include "session_manager.h"
+#include "session_recorder.h" 
 #include "ble_server.h"    // [FUTURO] O teu novo servidor BLE para a Etapa 2
 
 // Instâncias Globais dos teus Gestores de Hardware e Estado
-PowerManager   gPowerManager;
-SensorManager  gSensorManager; // O novo motor otimizado para o MPU6050
-SessionManager gSessionManager(gPowerManager, gSensorManager);
+PowerManager     gPowerManager;
+SensorManager    gSensorManager;
+SessionRecorder  gSessionRecorder;
+
+SessionManager   gSessionManager(gPowerManager, gSensorManager, gSessionRecorder); // 1. Instanciar o gestor de sessão globalmente
 BLEServerManager gBleServer(gSessionManager); // 2. Instanciar o BLE globalmente, passando a sessão
 
 void setup() {
@@ -49,7 +52,10 @@ void loop() {
         bleWasShutdown = true;
       }
     } else {
-      bleWasShutdown = false;
+      if (bleWasShutdown) {
+        gBleServer.init();
+        bleWasShutdown = false;
+      }
       gBleServer.handle();
     }
 }

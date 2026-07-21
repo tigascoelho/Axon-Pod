@@ -32,6 +32,10 @@ void PowerManager::setLowPowerMode() {
   setCpuFrequencyMhz(80);
 }
 
+bool PowerManager::isBatteryLow() const {
+  return readBatteryPercent() <= 20;
+}
+
 // Esta será a tua função principal chamada no loop do main.cpp
 void PowerManager::update(uint32_t nowMs) {
   // Se precisares de alguma verificação cíclica (ex: ler bateria a cada X segundos), entra aqui.

@@ -29,7 +29,7 @@ void SensorManager::init() {
 
   uint8_t whoFull = 0;
   bool haveWho = readWhoAmIByte(0x68, &whoFull);
-  bool knownWho = haveWho && (whoFull == 0x68);
+  bool knownWho = haveWho && (whoFull == 0x68 || whoFull == 0x70 || whoFull == 0x72);
 
   if (!knownWho || !mpu.testConnection()) {
     imuInitialized_ = false;
